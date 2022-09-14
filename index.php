@@ -1,3 +1,19 @@
+<?php 
+
+    /* include("grafo.php");
+
+    session_start();
+    $estado = "";
+    $mensaje = "";
+
+    if ( !isset($_SESSION["grafo"]) ) {
+        $_SESSION["grafo"] = new Grafo();
+        $estado = "success";
+        $mensaje = "¡Nuevo Grafo Creado!";
+    } */
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,174 +32,78 @@
         }
     </style>
 </head>
-
-<h1>Pruebas del proyecto grafo</h1>
 <body>
 
 <main>
-<?php
+    <h1>Proyecto de Grafos</h1>
+    <section class="forms-container">
+        <form action="index.php" method="post">
+            <label for="agregarVertice-id">Id del Vertice:</label>
+            <input type="text" name="idVertice" id="agregarVertice-id">
+    
+            <button type="submit" name="agregarVertice">Agregar Vertice</button>
+        </form>
+    
+        <form action="index.php" method="post">
+            <label for="agregarArista-origen">Vertice Origen:</label>
+            <input type="text" name="origen" id="agregarArista-origen">
+    
+            <label for="agregarArista-destino">Vertice Destino:</label>
+            <input type="text" name="destino" id="agregarArista-destino">
+    
+            <label for="agregarArista-peso">Peso:</label>
+            <input type="text" name="peso" id="agregarArista-peso">
+    
+            <button type="submit" name="agregarArista">Agregar Arista</button>
+        </form>
+    
+        <form action="index.php" method="post">
+            <button type="submit" name="verGrafo">Ver grafo</button>
+        </form>
+    
+        <form action="index.php" method="post">
+            <label for="verVertice-id">Id del Vertice:</label>
+            <input type="text" name="idVertice" id="verVertice-id">
+    
+            <button type="submit" name="verVertice">Ver Vertice</button>
+        </form>
+    
+        <form action="index.php" method="post">
+            <label for="verAdyacentes-id">Id del Vertice:</label>
+            <input type="text" name="idVertice" id="verAdyacentes-id">
+    
+            <button type="submit" name="verAdyacentes">Ver Adyacentes</button>
+        </form>
+    
+        <form action="index.php" method="post">
+            <label for="verGrado-id">Id del Vertice:</label>
+            <input type="text" name="idVertice" id="verGrado-id">
+    
+            <button type="submit" name="verGrado">Ver Grado</button>
+        </form>
+    
+        <form action="index.php" method="post">
+            <label for="eliminarVertice-id">Id del Vertice:</label>
+            <input type="text" name="idVertice" id="eliminarVertice-id">
+    
+            <button type="submit" name="eliminarVertice">Eliminar Vertice</button>
+        </form>
+    
+        <form action="index.php" method="post">
+            <label for="eliminarArista-origen">Vertice Origen:</label>
+            <input type="text" name="origen" id="eliminarArista-origen">
+    
+            <label for="eliminarArista-destino">Vertice Destino:</label>
+            <input type="text" name="destino" id="eliminarArista-destino">
+    
+            <button type="submit" name="eliminarArista">Eliminar Arista</button>
+        </form>
+    </section>
+    
+    <section class="output-container">
 
-include("grafo.php");
-
-$n = new Grafo();
-
-$n->agregarVertice(new Vertice("A"));
-$n->agregarVertice(new Vertice("B"));
-$n->agregarVertice(new Vertice("C"));
-$n->agregarVertice(new Vertice("D"));
-$n->agregarVertice(new Vertice("H"));
-
-$n->agregarArista("A","B",3);
-$n->agregarArista("A","C",5);
-$n->agregarArista("C","D",10);
-$n->agregarArista("D","A",3);
-$n->agregarArista("B","H",9);
-
-echo "<b>Matriz Adyacencia:</b><br>";
-print_r($n->getMatrizA());
-echo "<hr>";
-
-echo "<b>Vector Vertices:</b><br>";
-print_r($n->getVectorV());
-echo "<hr>";
-
-//visualizar matriz adyacencia
-echo "<b>Recorrido Matriz Adyacencia:</b><br>";
-foreach ($n->getMatrizA() as $vp => $adya) {
-    echo "<br>".$vp." ->";
-    if ($adya != null) {
-        foreach ($adya as $de => $pe) {
-            echo " | ".$de." | ".$pe." | -- ";
-        }
-    }
-}
-echo "<hr>";
-
-
-
-/*
-//Probar GetVertice
-echo "<b>GetVertice A:</b><br>";
-print_r($n->getVertice("A"));
-echo "<hr>";
-
-//Probar getAdyacentes
-echo "<b>Adyacentes de A:</b><br>";
-print_r($n->getAdyacentes("A"));
-echo "<hr>";
-
-//Probar grado
-echo "<b>Grado de A:</b><br>";
-print_r($n->grado("A"));
-echo "<hr>";
-
-//Probar Eliminar Arista A-C
-echo "<b>Eliminar Arista A-C:</b><br>";
-if ($n->eliminarArista("A","C")) {
-    echo "Arista eliminada";
-} else {
-    echo "ARista no Existe";
-}
-echo "<hr>";
-
-//visualizar matriz adyacencia
-echo "<b>Recorrido Matriz Adyacencia:</b><br>";
-foreach ($n->getMatrizA() as $vp => $adya) {
-    echo "<br>".$vp." ->";
-    if ($adya != null) {
-        foreach ($adya as $de => $pe) {
-            echo " | ".$de." | ".$pe." | -- ";
-        }
-    }
-}
-echo "<hr>";
-
-//Probar Eliminar vertice B
-echo "<b>Eliminar Vertice B:</b><br>";
-if ($n->eliminarVertice("B")) {
-    echo "Vertice eliminado";
-} else {
-    echo "Vertice no Existe";
-}
-echo "<hr>";
-
-//visualizar matriz adyacencia
-echo "<b>Recorrido Matriz Adyacencia:</b><br>";
-foreach ($n->getMatrizA() as $vp => $adya) {
-    echo "<br>".$vp." ->";
-    if ($adya != null) {
-        foreach ($adya as $de => $pe) {
-            echo " | ".$de." | ".$pe." | -- ";
-        }
-    }
-}
-echo "<hr>";
-
-*/
-
-$adyacencias = $n->getMatrizA();
-
-/* foreach ($adyacencias as $vertice => $aristas) {
-    echo "Vertice: $vertice, Aristas: <br>";
-    if (!empty($aristas)) {
-
-        foreach ($aristas as $destino => $peso) {
-            echo "$vertice -> $destino, peso: $peso <br>";
-        }
-
-    } else {
-        echo "Sin aristas!";
-    }
-    echo "<br><hr>";
-} */
-
-?>
+    </section>
 </main>
 
-<aside>
-    <div class="grafo" id="grafo"></div>
-
-    <script type="text/javascript">
-        // create an array with nodes
-        var nodes = new vis.DataSet([
-            <?php foreach ($adyacencias as $vertice => $aristas): ?>
-                {id: "<?= $vertice ?>", label: "<?= $vertice ?>"},
-            <?php endforeach; ?>
-        ]);
-
-        // create an array with edges
-        var edges = new vis.DataSet([
-            <?php foreach ($adyacencias as $vertice => $aristas): ?>
-                <?php if (!empty($aristas)): ?>
-                    <?php foreach ($aristas as $destino => $peso): ?>
-                        {from: "<?= $vertice ?>", to: "<?= $destino ?>", label: "<?= $peso ?>"},
-                    <?php endforeach; ?>
-                <?php endif; ?>
-            <?php endforeach; ?>
-        ]); 
-
-        // create a network
-        var container = document.getElementById('grafo');
-
-        // provide the data in the vis format
-        var data = {
-            nodes: nodes,
-            edges: edges
-        };
-        var options = {
-            edges: {
-                arrows: 'to',
-            },
-            configure: {
-                enabled: true,
-            }
-
-        };
-
-        // initialize your network!
-        var network = new vis.Network(container, data, options);
-    </script>
-</aside>
 </body>
-
 </html>
