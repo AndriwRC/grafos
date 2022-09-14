@@ -1,16 +1,16 @@
 <?php 
 
-    /* include("grafo.php");
+    include("grafo.php");
 
     session_start();
-    $estado = "";
+    $status = "";
     $mensaje = "";
 
     if ( !isset($_SESSION["grafo"]) ) {
         $_SESSION["grafo"] = new Grafo();
-        $estado = "success";
+        $status = "success";
         $mensaje = "¡Nuevo Grafo Creado!";
-    } */
+    }
 
 ?>
 
@@ -101,6 +101,17 @@
     </section>
     
     <section class="output-container">
+        <?php if($status == "error"): ?>
+            <div class="output error">
+                <span><?= $mensaje ?></span>
+            </div>
+        <?php endif; ?>
+
+        <?php if($status == "success"): ?>
+            <div class="output success">
+                <span><?= $mensaje ?></span>
+            </div>
+        <?php endif; ?>
 
     </section>
 </main>
