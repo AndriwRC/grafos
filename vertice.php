@@ -27,6 +27,11 @@ class Vertice{
     public function setVisitado($v) {
         $this->visitado = $v;
     }
+
+    public function __toString()
+    {
+        return "Id Vertice: $this->id";
+    }
     
 }
 

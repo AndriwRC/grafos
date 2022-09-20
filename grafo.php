@@ -22,11 +22,15 @@ class Grafo{
         } else {
             return false;
         }
-        return false;
+        return true;
     }
 
     public function getVertice($v) {
-        return $this->vectorV[$v];
+        if (isset($this->vectorV[$v])) {
+            return $this->vectorV[$v];
+        } else {
+            return false;
+        }
     }
 
     //recibe id de nodo origen, destino, y peso (opcional)
@@ -42,7 +46,11 @@ class Grafo{
 
     //recibe id de nodo y retorna en un arreglo sus adyacentes
     public function getAdyacentes($v) {
-        return $this->matrizA[$v];
+        if (isset($this->matrizA[$v])) {
+            return $this->matrizA[$v];
+        } else {
+            return false;
+        }
     }
 
     public function getMatrizA() {
@@ -55,7 +63,11 @@ class Grafo{
 
     //recibe el id del vertice y retorna grado de salida del mismo
     public function gradoSalida($v) {
-        return count($this->matrizA[$v]);
+        if (isset($this->matrizA[$v])) {
+            return count($this->matrizA[$v]);
+        } else {
+            return 0;
+        }
     }
 
     public function gradoEntrada($v) {
@@ -76,7 +88,11 @@ class Grafo{
 
     //recibe el id del vertice y retorna grado del mismo
     public function grado($v) {
-        return $this->gradoSalida($v) + $this->gradoEntrada($v);
+        if (isset($this->vectorV[$v])) {
+            return $this->gradoSalida($v) + $this->gradoEntrada($v);
+        } else {
+            return false;
+        }
     }
 
     //recibe id de vertice origen y destino
