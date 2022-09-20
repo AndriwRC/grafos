@@ -94,7 +94,7 @@ if (isset($_POST["eliminarArista"])) {
         $mensaje = "¡Una arista ha sido eliminada!";
     } else {
         $status = "error";
-        $mensaje = "¡Por favor ingrese los datos correctamente!";
+        $mensaje = "¡Arista no existe!";
     }
 }
 
@@ -109,21 +109,18 @@ if (isset($_POST["eliminarArista"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
     <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 
-    <style type="text/css">
-        .grafo {
-            width: 600px;
-            height: 400px;
-            border: 1px solid lightgray;
-        }
-    </style>
 </head>
 
 <body>
+    <h1>Proyecto de Grafos</h1>
 
     <main>
-        <h1>Proyecto de Grafos</h1>
         <section class="forms-container">
             <form action="index.php" method="post">
                 <label for="agregarVertice-id">Id del Vertice:</label>
@@ -199,6 +196,57 @@ if (isset($_POST["eliminarArista"])) {
                 <div class="output success">
                     <span><?= $mensaje ?></span>
                 </div>
+            <?php endif; ?>
+
+            <?php if (isset($_POST["verGrafo"])): ?>
+
+                <div class="grafo" id="grafo"></div>
+                
+                <?php $adyacencias = $_SESSION["grafo"]->getMatrizA(); ?>
+                <script type="text/javascript">
+                    // create an array with nodes
+                    let vertices = new vis.DataSet([
+                        <?php
+                            foreach ($adyacencias as $vertice => $aristas) {
+                                echo "{id: '$vertice', label: '$vertice'},";
+                            }
+                        ?>
+                    ]);
+
+                    // create an array with edges
+                    let aristas = new vis.DataSet([
+                        <?php
+                            foreach ($adyacencias as $vertice => $aristas) {
+                                if (!empty($aristas)) {
+                                    foreach ($aristas as $destino => $peso) {
+                                        echo "{from: '$vertice', to: '$destino', label: '$peso'},";
+                                    }
+                                }
+                            }
+                        ?>
+                    ]); 
+
+                    // create a network
+                    let contenedor = document.getElementById('grafo');
+
+                    // provide the data in the vis format
+                    let data = {
+                        nodes: vertices,
+                        edges: aristas
+                    };
+                    let opciones = {
+                        edges: {
+                            arrows: 'to',
+                        },
+                        configure: {
+                            enabled: true,
+                        }
+
+                    };
+
+                    // initialize your network!
+                    let grafo = new vis.Network(contenedor, data, opciones);
+                </script>
             <?php endif; ?>
 
         </section>
