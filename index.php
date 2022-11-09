@@ -97,7 +97,6 @@ if (isset($_POST["eliminarArista"])) {
         $mensaje = "¡Arista no existe!";
     }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -145,6 +144,20 @@ if (isset($_POST["eliminarArista"])) {
             <form action="index.php" method="post">
                 <button type="submit" name="verGrafo">Ver grafo</button>
             </form>
+            <form action="index.php" method="post">
+                <label for="caminoMasCorto-origen">Vertice Origen:</label>
+                <input type="text" name="origen" id="caminoMasCorto-origen">
+
+                <label for="caminoMasCorto-destino">Vertice Destino:</label>
+                <input type="text" name="destino" id="caminoMasCorto-destino">
+                <button type="submit" name="caminoMasCorto">Ver camino más corto</button>
+            </form>
+<!--             <form action="index.php" method="post">
+                <button type="submit" name="verGrafo">Ver grafo</button>
+            </form>
+            <form action="index.php" method="post">
+                <button type="submit" name="verGrafo">Ver grafo</button>
+            </form> -->
 
             <form action="index.php" method="post">
                 <label for="verVertice-id">Id del Vertice:</label>
@@ -198,7 +211,7 @@ if (isset($_POST["eliminarArista"])) {
                 </div>
             <?php endif; ?>
 
-            <?php if (isset($_POST["verGrafo"])): ?>
+            <?php if (isset($_POST["verGrafo"]) || isset($_POST["caminoMasCorto"])): ?>
 
                 <div class="grafo" id="grafo"></div>
                 
@@ -219,12 +232,12 @@ if (isset($_POST["eliminarArista"])) {
                             foreach ($adyacencias as $vertice => $aristas) {
                                 if (!empty($aristas)) {
                                     foreach ($aristas as $destino => $peso) {
-                                        echo "{from: '$vertice', to: '$destino', label: '$peso'},";
+                                        echo "{id: '$vertice$destino', from: '$vertice', to: '$destino', label: '$peso'},";
                                     }
                                 }
                             }
                         ?>
-                    ]); 
+                    ]);
 
                     // create a network
                     let contenedor = document.getElementById('grafo');
@@ -235,23 +248,42 @@ if (isset($_POST["eliminarArista"])) {
                         edges: aristas
                     };
                     let opciones = {
+                        nodes: {
+                            color: {
+                                highlight: {
+                                    border: '#D21F3C',
+                                    background: '#D2E5FF'
+                                },
+                            },
+                        },
                         edges: {
                             arrows: 'to',
+                            color: {
+                                highlight: '#D21F3C',
+                            }
                         },
                         configure: {
-                            enabled: true,
+                            enabled: false,
                         }
-
                     };
 
                     // initialize your network!
                     let grafo = new vis.Network(contenedor, data, opciones);
+
+                    <?php if (isset($_POST["caminoMasCorto"])): ?>
+                        <?php $camino = $_SESSION["grafo"]->caminoMasCorto($_POST["origen"], $_POST["destino"]); ?>
+                        <?php $aristasCamino = $_SESSION["grafo"]->mostrarAristasRecorrido($camino); ?>
+
+                        grafo.setSelection({nodes: <?= json_encode($camino) ?>, edges: <?= json_encode($aristasCamino) ?>}, {highlightEdges: false})
+                    <?php endif; ?>
                 </script>
             <?php endif; ?>
-
         </section>
     </main>
 
+    <footer>
+        <p>Hehco por: Andriw Rollo Castro y Wiliam Lascano Garcia</p>
+    </footer>
 </body>
 
 </html>

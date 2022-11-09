@@ -126,6 +126,70 @@ class Grafo{
         return true;
     }
 
+    public function caminoMasCorto($a,$b){
+
+        $S = array();
+
+        $Q = array();
+
+        foreach(array_keys($this->matrizA) as $val) $Q[$val] = 99999;
+
+        $Q[$a] = 0;
+
+        //inicio calculo
+        while(!empty($Q)){
+
+            $min = array_search(min($Q), $Q);
+
+            if($min == $b) break;
+
+            if (is_array($this->matrizA[$min]) || is_object($this->matrizA[$min])) {
+
+                foreach($this->matrizA[$min] as $key=>$val) if(!empty($Q[$key]) && $Q[$min] + $val < $Q[$key]) {
+
+                    $Q[$key] = $Q[$min] + $val;
+
+                    $S[$key] = array($min, $Q[$key]);
+
+                }
+
+            }
+            unset($Q[$min]);
+
+        }
+
+        $path = array();
+
+        $pos = $b;
+
+        while($pos != $a){
+
+            $path[] = $pos;
+
+            $pos = $S[$pos][0];
+
+        }
+
+        $path[] = $a;
+
+        $path = array_reverse($path);
+
+        return $path;
+
+    }
+
+    public function mostrarAristasRecorrido($camino) {
+        $anterior = $camino[0];
+        $aristas = array();
+        for ($i=1; $i < count($camino); $i++) { 
+            $actual = $camino[$i];
+            $arista = $anterior . $actual;
+            array_push($aristas, $arista);
+            $anterior = $actual;
+        }
+        return $aristas;
+    }
+
 }
 
 ?>
