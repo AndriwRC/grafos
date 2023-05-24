@@ -12,17 +12,52 @@ if (!isset($_SESSION["grafo"])) {
     $mensaje = "¡Nuevo Grafo Creado!";
 }
 
+if (isset($_POST["ejemplo"])) {
+    $_SESSION["grafo"]->agregarVertice(new Vertice("A", "BARRANQUILLA", 120000, "Turistico", "Es bacano", 5, 120));
+    $_SESSION["grafo"]->agregarVertice(new Vertice("B", "CARTAGENA", 120000, "Turistico", "Es bacano", 5, 10));
+    $_SESSION["grafo"]->agregarVertice(new Vertice("C", "SANTA MARTA", 120000, "Turistico", "Es bacano", 5, 60));
+    $_SESSION["grafo"]->agregarVertice(new Vertice("D", "VALLEDUPAR", 120000, "Turistico", "Es bacano", 5, 100));
+    $_SESSION["grafo"]->agregarVertice(new Vertice("E", "SOLEDAD", 120000, "Turistico", "Es bacano", 5, 80));
+    $_SESSION["grafo"]->agregarVertice(new Vertice("F", "MALAMBO", 120000, "Turistico", "Es bacano", 5, 70));
+    $_SESSION["grafo"]->agregarVertice(new Vertice("G", "BARANOA", 120000, "Turistico", "Es bacano", 5, 45));
+
+    $_SESSION["grafo"]->agregarArista("A", "B", 20);
+    $_SESSION["grafo"]->agregarArista("B", "A", 20);
+    $_SESSION["grafo"]->agregarArista("B", "C", 19);
+    $_SESSION["grafo"]->agregarArista("C", "B", 19);
+    $_SESSION["grafo"]->agregarArista("C", "D", 18);
+    $_SESSION["grafo"]->agregarArista("D", "C", 18);
+    $_SESSION["grafo"]->agregarArista("D", "E", 17);
+    $_SESSION["grafo"]->agregarArista("E", "D", 17);
+    $_SESSION["grafo"]->agregarArista("E", "F", 16);
+    $_SESSION["grafo"]->agregarArista("F", "E", 16);
+    $_SESSION["grafo"]->agregarArista("F", "G", 15);
+    $_SESSION["grafo"]->agregarArista("G", "F", 15);
+    $_SESSION["grafo"]->agregarArista("A", "C", 14);
+    $_SESSION["grafo"]->agregarArista("B", "D", 13);
+    $_SESSION["grafo"]->agregarArista("C", "E", 12);
+    $_SESSION["grafo"]->agregarArista("D", "F", 11);
+    $_SESSION["grafo"]->agregarArista("E", "G", 10);
+}
+
 if (isset($_POST["agregarVertice"])) {
     if (!empty($_POST["idVertice"])) {
-        $resultado = $_SESSION["grafo"]->AgregarVertice(new vertice($_POST["idVertice"]));
+        $resultado = $_SESSION["grafo"]->AgregarVertice(new vertice(
+            $_POST["idVertice"],
+            $_POST["nombreVertice"],
+            $_POST["descripcionVertice"],
+            $_POST["calificacionVertice"],
+            $_POST["precioVertice"],
+            $_POST["categoriaVertice"],
+            $_POST["duracionVertice"],
+        ));
         if ($resultado) {
             $status = "success";
             $mensaje = "¡Se ha agregado un nuevo vertice!";
         } else {
             $status = "error";
-            $mensaje = "El vertice ". $_POST["idVertice"] ." ya existe";
+            $mensaje = "El vertice " . $_POST["idVertice"] . " ya existe";
         }
-        
     } else {
         $status = "error";
         $mensaje = "¡Por favor ingrese los datos correctamente!";
@@ -62,7 +97,7 @@ if (isset($_POST["verAdyacentes"])) {
     } else {
         $status = "error";
         $mensaje = "¡Vertice sin adyacencias!";
-    } 
+    }
 }
 
 if (isset($_POST["verGrado"])) {
@@ -122,10 +157,32 @@ if (isset($_POST["eliminarArista"])) {
     <main>
         <section class="forms-container">
             <form action="index.php" method="post">
-                <label for="agregarVertice-id">Id del Vertice:</label>
+                <button type="submit" name="ejemplo">Cargar Ejemplo</button>
+            </form>
+
+            <form action="index.php" method="post">
+                <label for="agregarVertice-id">Id:</label>
                 <input type="text" name="idVertice" id="agregarVertice-id">
 
-                <button type="submit" name="agregarVertice">Agregar Vertice</button>
+                <label for="agregarVertice-nombre">Nombre:</label>
+                <input type="text" name="nombreVertice" id="agregarVertice-nombre">
+
+                <label for="agregarVertice-descripcion">Descripcion:</label>
+                <input type="text" name="descripcionVertice" id="agregarVertice-descripcion">
+
+                <label for="agregarVertice-calificacion">Calificacion:</label>
+                <input type="text" name="calificacionVertice" id="agregarVertice-calificacion">
+
+                <label for="agregarVertice-precio">Precio:</label>
+                <input type="text" name="precioVertice" id="agregarVertice-precio">
+
+                <label for="agregarVertice-categoria">Categoría:</label>
+                <input type="text" name="categoriaVertice" id="agregarVertice-categoria">
+
+                <label for="agregarVertice-duracion">Duración:</label>
+                <input type="text" name="duracionVertice" id="agregarVertice-duracion">
+
+                <button type="submit" name="agregarVertice">Agregar Punto Turístico</button>
             </form>
 
             <form action="index.php" method="post">
@@ -144,6 +201,7 @@ if (isset($_POST["eliminarArista"])) {
             <form action="index.php" method="post">
                 <button type="submit" name="verGrafo">Ver grafo</button>
             </form>
+
             <form action="index.php" method="post">
                 <label for="caminoMasCorto-origen">Vertice Origen:</label>
                 <input type="text" name="origen" id="caminoMasCorto-origen">
@@ -152,12 +210,6 @@ if (isset($_POST["eliminarArista"])) {
                 <input type="text" name="destino" id="caminoMasCorto-destino">
                 <button type="submit" name="caminoMasCorto">Ver camino más corto</button>
             </form>
-<!--             <form action="index.php" method="post">
-                <button type="submit" name="verGrafo">Ver grafo</button>
-            </form>
-            <form action="index.php" method="post">
-                <button type="submit" name="verGrafo">Ver grafo</button>
-            </form> -->
 
             <form action="index.php" method="post">
                 <label for="verVertice-id">Id del Vertice:</label>
@@ -211,31 +263,41 @@ if (isset($_POST["eliminarArista"])) {
                 </div>
             <?php endif; ?>
 
-            <?php if (isset($_POST["verGrafo"]) || isset($_POST["caminoMasCorto"])): ?>
+            <?php if (isset($_POST["verGrafo"]) || isset($_POST["caminoMasCorto"])) : ?>
 
                 <div class="grafo" id="grafo"></div>
-                
+
                 <?php $adyacencias = $_SESSION["grafo"]->getMatrizA(); ?>
                 <script type="text/javascript">
+                    // parse html function
+                    function htmlTitle(html) {
+                        const container = document.createElement('div');
+                        container.innerHTML = html;
+                        return container;
+                    }
+
                     // create an array with nodes
                     let vertices = new vis.DataSet([
                         <?php
-                            foreach ($adyacencias as $vertice => $aristas) {
-                                echo "{id: '$vertice', label: '$vertice'},";
-                            }
+                        foreach ($adyacencias as $id => $aristas) {
+                            $vertice = $_SESSION["grafo"]->getVertice($id);
+                            $nombre = $vertice->getNombre();
+                            $duracion = $vertice->getDuracionVisita();
+                            echo "{font: {strokeWidth: 1, strokeColor: '#FFF3C6', vadjust: -43}, id: '$id', label: '$nombre', mass: 5, shape: 'dot', title: htmlTitle('$vertice')},";
+                        }
                         ?>
                     ]);
 
                     // create an array with edges
                     let aristas = new vis.DataSet([
                         <?php
-                            foreach ($adyacencias as $vertice => $aristas) {
-                                if (!empty($aristas)) {
-                                    foreach ($aristas as $destino => $peso) {
-                                        echo "{id: '$vertice$destino', from: '$vertice', to: '$destino', label: '$peso'},";
-                                    }
+                        foreach ($adyacencias as $vertice => $aristas) {
+                            if (!empty($aristas)) {
+                                foreach ($aristas as $destino => $peso) {
+                                    echo "{id: '$vertice$destino', from: '$vertice', to: '$destino', label: '$peso'},";
                                 }
                             }
+                        }
                         ?>
                     ]);
 
@@ -270,11 +332,16 @@ if (isset($_POST["eliminarArista"])) {
                     // initialize your network!
                     let grafo = new vis.Network(contenedor, data, opciones);
 
-                    <?php if (isset($_POST["caminoMasCorto"])): ?>
+                    <?php if (isset($_POST["caminoMasCorto"])) : ?>
                         <?php $camino = $_SESSION["grafo"]->caminoMasCorto($_POST["origen"], $_POST["destino"]); ?>
                         <?php $aristasCamino = $_SESSION["grafo"]->mostrarAristasRecorrido($camino); ?>
 
-                        grafo.setSelection({nodes: <?= json_encode($camino) ?>, edges: <?= json_encode($aristasCamino) ?>}, {highlightEdges: false})
+                        grafo.setSelection({
+                            nodes: <?= json_encode($camino) ?>,
+                            edges: <?= json_encode($aristasCamino) ?>
+                        }, {
+                            highlightEdges: false
+                        })
                     <?php endif; ?>
                 </script>
             <?php endif; ?>
@@ -282,7 +349,7 @@ if (isset($_POST["eliminarArista"])) {
     </main>
 
     <footer>
-        <p>Hehco por: Andriw Rollo Castro y Wiliam Lascano Garcia</p>
+        <p>Hehco por: Andriw Rollo Castro</p>
     </footer>
 </body>
 

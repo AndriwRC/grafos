@@ -4,13 +4,13 @@ include("./grafo.php");
 
 $grafo = new Grafo();
 
-$grafo->agregarVertice(new Vertice("A"));
-$grafo->agregarVertice(new Vertice("B"));
-$grafo->agregarVertice(new Vertice("C"));
-$grafo->agregarVertice(new Vertice("D"));
-$grafo->agregarVertice(new Vertice("E"));
-$grafo->agregarVertice(new Vertice("F"));
-$grafo->agregarVertice(new Vertice("G"));
+$grafo->agregarVertice(new Vertice("A", "Barranquilla", 120000, "Turistico", "Es bacano", 5, 120));
+$grafo->agregarVertice(new Vertice("B", "Barranquilla", 120000, "Turistico", "Es bacano", 5, 120));
+$grafo->agregarVertice(new Vertice("C", "Barranquilla", 120000, "Turistico", "Es bacano", 5, 120));
+$grafo->agregarVertice(new Vertice("D", "Barranquilla", 120000, "Turistico", "Es bacano", 5, 120));
+$grafo->agregarVertice(new Vertice("E", "Barranquilla", 120000, "Turistico", "Es bacano", 5, 120));
+$grafo->agregarVertice(new Vertice("F", "Barranquilla", 120000, "Turistico", "Es bacano", 5, 120));
+$grafo->agregarVertice(new Vertice("G", "Barranquilla", 120000, "Turistico", "Es bacano", 5, 120));
 
 $grafo->agregarArista("A", "B", 20);
 $grafo->agregarArista("B", "C", 19);
@@ -24,11 +24,10 @@ $grafo->agregarArista("C", "E", 12);
 $grafo->agregarArista("D", "F", 11);
 $grafo->agregarArista("E", "G", 10);
 
-$resultado = $grafo->caminoMasCorto("A", "F");
-var_dump($resultado);
+// $resultado = $grafo->caminoMasCorto("A", "F");
+// var_dump($resultado);
 
-$aristas = $grafo->mostrarAristasRecorrido($resultado);
-var_dump($aristas);
+// $aristas = $grafo->mostrarAristasRecorrido($resultado);
+// var_dump($aristas);
 
-
-?>
+// echo $grafo->getVertice("A");
