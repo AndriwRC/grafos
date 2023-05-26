@@ -5,6 +5,7 @@ function addDestination() {
     const txt = document.createTextNode('Vertice Destino:');
     lbl.appendChild(txt);
     const input = document.createElement('input');
+    input.setAttribute('type', 'text');
     input.setAttribute('name', 'caminoMasCortoData[]');
     container.append(lbl, input);
 }

@@ -452,7 +452,7 @@ if (isset($_POST["eliminarArista"])) {
     </main>
 
     <footer>
-        <p>Hehco por: Andriw Rollo Castro</p>
+        <p>Hehco por: Andriw Rollo, David Silvera, Yesid Borrero</p>
     </footer>
 </body>
 
