@@ -16,28 +16,100 @@ if (isset($_POST["ejemplo"])) {
     $_SESSION["grafo"]->agregarVertice(new Vertice("A", "BARRANQUILLA", 120000, "Turístico", "Es la capital del departamento Atlántico y es un desbordante puerto marino, bordeado por el río Magdalena.", 5, 120));
     $_SESSION["grafo"]->agregarVertice(new Vertice("B", "CARTAGENA", 120000, "Histórico", "Es una ciudad portuaria en la costa caribeña de Colombia", 5, 10));
     $_SESSION["grafo"]->agregarVertice(new Vertice("C", "SANTA MARTA", 120000, "Turístico", "Es una ciudad ubicada en el mar Caribe, en el departamento de Magdalena en el norte de Colombia.", 5, 60));
-    $_SESSION["grafo"]->agregarVertice(new Vertice("D", "SAN ANDRÉS", 120000, "Turístico", "Es una pequeña isla colombiana frente a Nicaragua en el Caribe.", 5, 100));
-    $_SESSION["grafo"]->agregarVertice(new Vertice("E", "TAGANGA", 120000, "Turístico", "Es la mejor opción para alojarse en Santa Marta si lo que buscas es disfrutar de la playa.", 5, 80));
-    $_SESSION["grafo"]->agregarVertice(new Vertice("F", "PALOMINO", 120000, "Cultural", "Es uno de los cinco corregimientos del municipio de Dibulla, perteneciente a La Guajira", 5, 70));
-    $_SESSION["grafo"]->agregarVertice(new Vertice("G", "COVEÑAS", 120000, "Turístico", "Es una ciudad turística del Golfo de Morrosquillo en el norte de Colombia.", 5, 45));
+    $_SESSION["grafo"]->agregarVertice(new Vertice("D", "TAGANGA", 120000, "Turístico", "Es la mejor opción para alojarse en Santa Marta si lo que buscas es disfrutar de la playa.", 5, 80));
+    $_SESSION["grafo"]->agregarVertice(new Vertice("E", "PALOMINO", 120000, "Cultural", "Es uno de los cinco corregimientos del municipio de Dibulla, perteneciente a La Guajira", 5, 70));
+    $_SESSION["grafo"]->agregarVertice(new Vertice("F", "COVEÑAS", 120000, "Turístico", "Es una ciudad turística del Golfo de Morrosquillo en el norte de Colombia.", 5, 45));
+    $_SESSION["grafo"]->agregarVertice(new Vertice("G", "TOLÚ", 120000, "Turístico", "Es una ciudad turística del golfo de Morrosquillo, a lo largo de la costa del Caribe en el norte de Colombia.", 5, 45));
+    $_SESSION["grafo"]->agregarVertice(new Vertice("H", "RIOHACHA", 120000, "Turístico", "Es una ciudad del norte de Colombia, donde el río Ranchería se une al mar Caribe. ", 5, 45));
+    $_SESSION["grafo"]->agregarVertice(new Vertice("I", "CIÉNAGA", 120000, "Cultural", "Se encuentra a orillas del Mar Caribe, junto a la Sierra Nevada de Santa Marta.", 5, 45));
+    $_SESSION["grafo"]->agregarVertice(new Vertice("J", "SINCELEJO", 120000, "Cultural", "Es una ciudad del norte de Colombia conocida por su festival de corridas de toros Corralejas y su patrimonio musical.", 5, 45));
+    $_SESSION["grafo"]->agregarVertice(new Vertice("K", "VALLEDUPAR", 120000, "Cultural", "Es una ciudad del norte de Colombia, conocida como la capital de la música vallenato.", 5, 45));
+    $_SESSION["grafo"]->agregarVertice(new Vertice("L", "TURBO", 120000, "Turístico", "Es un distrito de Colombia localizado en la subregión de Urabá en el departamento de Antioquia.", 5, 45));
+    $_SESSION["grafo"]->agregarVertice(new Vertice("M", "USIACURÍ", 120000, "Turístico", "Es conocido como El Pesebre del Atlántico ya que sus viviendas pintorescas están montada sobre una irregular topografía.", 5, 45));
+    $_SESSION["grafo"]->agregarVertice(new Vertice("N", "ARACATACA", 120000, "Cultural", "Es un municipio colombiano del departamento del Magdalena. Allí nacieron el Premio Nobel de Literatura Gabriel García Márquez.", 5, 45));
+    $_SESSION["grafo"]->agregarVertice(new Vertice("O", "SABANALARGA", 120000, "Histórico", "La fertilidad de sus suelos la ha convertido en una despensa del departamento con el suministro de vacunos y los cultivos de azúcar, algodón, maíz y plátano.", 5, 45));
+    $_SESSION["grafo"]->agregarVertice(new Vertice("P", "MOMPOX", 120000, "Histórico", "Esta fue la primera población del Nuevo Reino de Granada en proclamar la independencia absoluta de España el 6 de agosto de 1810.", 5, 45));
+    $_SESSION["grafo"]->agregarVertice(new Vertice("Q", "FUNDACIÓN", 120000, "Cultural", "Es un municipio de Colombia perteneciente al departamento del Magdalena, está localizado cerca de la Sierra Nevada de Santa Marta.", 5, 45));
 
-    $_SESSION["grafo"]->agregarArista("A", "B", 20);
-    $_SESSION["grafo"]->agregarArista("B", "A", 20);
-    $_SESSION["grafo"]->agregarArista("B", "C", 19);
-    $_SESSION["grafo"]->agregarArista("C", "B", 19);
-    $_SESSION["grafo"]->agregarArista("C", "D", 18);
-    $_SESSION["grafo"]->agregarArista("D", "C", 18);
-    $_SESSION["grafo"]->agregarArista("D", "E", 17);
-    $_SESSION["grafo"]->agregarArista("E", "D", 17);
-    $_SESSION["grafo"]->agregarArista("E", "F", 16);
-    $_SESSION["grafo"]->agregarArista("F", "E", 16);
-    $_SESSION["grafo"]->agregarArista("F", "G", 15);
-    $_SESSION["grafo"]->agregarArista("G", "F", 15);
-    $_SESSION["grafo"]->agregarArista("A", "C", 14);
-    $_SESSION["grafo"]->agregarArista("B", "D", 13);
-    $_SESSION["grafo"]->agregarArista("C", "E", 12);
-    $_SESSION["grafo"]->agregarArista("D", "F", 11);
-    $_SESSION["grafo"]->agregarArista("E", "G", 10);
+    // Conexion Barranquilla
+    $_SESSION["grafo"]->agregarArista("A", "B", 124);
+    $_SESSION["grafo"]->agregarArista("B", "A", 124);
+    $_SESSION["grafo"]->agregarArista("A", "I", 44);
+    $_SESSION["grafo"]->agregarArista("I", "A", 44);
+    $_SESSION["grafo"]->agregarArista("A", "O", 49);
+    $_SESSION["grafo"]->agregarArista("O", "A", 49);
+    $_SESSION["grafo"]->agregarArista("A", "M", 44);
+    $_SESSION["grafo"]->agregarArista("M", "A", 44);
+    $_SESSION["grafo"]->agregarArista("A", "Q", 136);
+    $_SESSION["grafo"]->agregarArista("Q", "A", 136);
+
+    // Conexion Cartagena
+    $_SESSION["grafo"]->agregarArista("B", "M", 84);
+    $_SESSION["grafo"]->agregarArista("M", "B", 84);
+    $_SESSION["grafo"]->agregarArista("B", "J", 200);
+    $_SESSION["grafo"]->agregarArista("J", "B", 200);
+    $_SESSION["grafo"]->agregarArista("B", "G", 307);
+    $_SESSION["grafo"]->agregarArista("G", "B", 307);
+    $_SESSION["grafo"]->agregarArista("B", "K", 432);
+    $_SESSION["grafo"]->agregarArista("K", "B", 432);
+    $_SESSION["grafo"]->agregarArista("B", "O", 89);
+    $_SESSION["grafo"]->agregarArista("O", "B", 89);
+
+    // Conexion Santa Marta
+    $_SESSION["grafo"]->agregarArista("C", "I", 30);
+    $_SESSION["grafo"]->agregarArista("I", "C", 30);
+    $_SESSION["grafo"]->agregarArista("C", "D", 4);
+    $_SESSION["grafo"]->agregarArista("D", "C", 4);
+    $_SESSION["grafo"]->agregarArista("C", "E", 71);
+    $_SESSION["grafo"]->agregarArista("E", "C", 71);
+
+    // Conexion Palomino
+    $_SESSION["grafo"]->agregarArista("E", "H", 487);
+    $_SESSION["grafo"]->agregarArista("H", "E", 71);
+
+    // Conexion Convenhas
+    $_SESSION["grafo"]->agregarArista("F", "G", 28);
+    $_SESSION["grafo"]->agregarArista("G", "F", 28);
+    $_SESSION["grafo"]->agregarArista("F", "L", 544);
+    $_SESSION["grafo"]->agregarArista("L", "F", 544);
+
+    // Conexion Tolu
+    $_SESSION["grafo"]->agregarArista("G", "J", 40);
+    $_SESSION["grafo"]->agregarArista("J", "G", 40);
+
+    // Conexion Riohacha
+    $_SESSION["grafo"]->agregarArista("H", "K", 225);
+    $_SESSION["grafo"]->agregarArista("K", "H", 225);
+
+    // Conexion Cienaga
+    $_SESSION["grafo"]->agregarArista("I", "N", 143);
+    $_SESSION["grafo"]->agregarArista("N", "I", 143);
+    $_SESSION["grafo"]->agregarArista("I", "K", 340);
+    $_SESSION["grafo"]->agregarArista("K", "I", 340);
+    $_SESSION["grafo"]->agregarArista("I", "P", 332);
+    $_SESSION["grafo"]->agregarArista("P", "I", 332);
+
+    // Conexion Sincelejo
+    $_SESSION["grafo"]->agregarArista("J", "K", 244);
+    $_SESSION["grafo"]->agregarArista("K", "J", 244);
+    $_SESSION["grafo"]->agregarArista("J", "P", 334);
+    $_SESSION["grafo"]->agregarArista("P", "J", 334);
+    $_SESSION["grafo"]->agregarArista("J", "L", 354);
+    $_SESSION["grafo"]->agregarArista("L", "J", 354);
+
+    // Conexion Valledupar
+    $_SESSION["grafo"]->agregarArista("K", "N", 165);
+    $_SESSION["grafo"]->agregarArista("N", "K", 165);
+    $_SESSION["grafo"]->agregarArista("K", "P", 465);
+    $_SESSION["grafo"]->agregarArista("P", "K", 465);
+
+    // Conexion Ararcataca
+    $_SESSION["grafo"]->agregarArista("N", "Q", 65);
+    $_SESSION["grafo"]->agregarArista("Q", "N", 65);
+
+    // Usiacuri
+    $_SESSION["grafo"]->agregarArista("M", "O", 22);
+    $_SESSION["grafo"]->agregarArista("O", "M", 22);
 }
 
 if (isset($_POST["agregarVertice"])) {
