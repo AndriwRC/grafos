@@ -8,11 +8,11 @@ Orden para asignar estilos:
 */
 :root {
     /* Colores */
-    --primary-color: #1D61B8;
+    --primary-color: #1d61b8;
     --secondary-color: #37ccd1;
-    --tertiary-color: #B82C1D;
+    --tertiary-color: #b82c1d;
     --black: #282623;
-    --grey: #586B85;
+    --grey: #586b85;
     --off-white: #faf8f7;
     --just-white: #fff;
 }
@@ -65,7 +65,7 @@ main {
     padding: 10px;
     background-color: var(--primary-color);
     color: var(--off-white);
-/*     box-shadow: 2px 2px var(--secondary-color); */
+    /*     box-shadow: 2px 2px var(--secondary-color); */
 }
 .forms-container label {
     font-size: 2rem;
@@ -95,6 +95,17 @@ main {
     font-weight: 700;
     border-radius: 5px;
     cursor: pointer;
+}
+#nodesContainer {
+    display: flex;
+    flex-direction: column;
+}
+#addBtn {
+    font-size: 1.2rem;
+    width: fit-content;
+    margin-bottom: 8px;
+    background: none;
+    align-self: end;
 }
 .output-container {
     padding: 15px 15px 15px 0;

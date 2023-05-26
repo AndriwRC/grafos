@@ -112,6 +112,11 @@ class Vertice // Punto Turistico
 
     public function __toString()
     {
-        return "<b>Id:</b> $this->id,<br> <b>Nombre:</b> $this->nombre,<br> <b>Descripcion:</b> $this->descripcion,<br> <b>Calificacion:</b> $this->calificacion,<br> <b>Precio:</b> $this->precio,<br> <b>Categoria:</b> $this->categoria,<br> <b>Duracion:</b> $this->duracionVisita";
+        return "<b>Id:</b> $this->id,<br> <b>Nombre:</b> $this->nombre,<br> <b>Descripcion:</b> $this->descripcion<br> <b>Calificacion:</b> $this->calificacion,<br> <b>Precio:</b> $this->precio,<br> <b>Categoria:</b> $this->categoria,<br> <b>Duracion:</b> $this->duracionVisita";
+    }
+
+    public function basicToString()
+    {
+        return "<b>Id:</b> $this->id,<br> <b>Nombre:</b> $this->nombre,<br><b>Calificacion:</b> $this->calificacion,<br><b>Precio:</b> $this->precio,<br> <b>Categoria:</b> $this->categoria,<br> <b>Duracion:</b> $this->duracionVisita";
     }
 }

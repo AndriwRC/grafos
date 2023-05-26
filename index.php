@@ -13,13 +13,13 @@ if (!isset($_SESSION["grafo"])) {
 }
 
 if (isset($_POST["ejemplo"])) {
-    $_SESSION["grafo"]->agregarVertice(new Vertice("A", "BARRANQUILLA", 120000, "Turistico", "Es bacano", 5, 120));
-    $_SESSION["grafo"]->agregarVertice(new Vertice("B", "CARTAGENA", 120000, "Turistico", "Es bacano", 5, 10));
-    $_SESSION["grafo"]->agregarVertice(new Vertice("C", "SANTA MARTA", 120000, "Turistico", "Es bacano", 5, 60));
-    $_SESSION["grafo"]->agregarVertice(new Vertice("D", "VALLEDUPAR", 120000, "Turistico", "Es bacano", 5, 100));
-    $_SESSION["grafo"]->agregarVertice(new Vertice("E", "SOLEDAD", 120000, "Turistico", "Es bacano", 5, 80));
-    $_SESSION["grafo"]->agregarVertice(new Vertice("F", "MALAMBO", 120000, "Turistico", "Es bacano", 5, 70));
-    $_SESSION["grafo"]->agregarVertice(new Vertice("G", "BARANOA", 120000, "Turistico", "Es bacano", 5, 45));
+    $_SESSION["grafo"]->agregarVertice(new Vertice("A", "BARRANQUILLA", 120000, "Turístico", "Es la capital del departamento Atlántico y es un desbordante puerto marino, bordeado por el río Magdalena.", 5, 120));
+    $_SESSION["grafo"]->agregarVertice(new Vertice("B", "CARTAGENA", 120000, "Histórico", "Es una ciudad portuaria en la costa caribeña de Colombia", 5, 10));
+    $_SESSION["grafo"]->agregarVertice(new Vertice("C", "SANTA MARTA", 120000, "Turístico", "Es una ciudad ubicada en el mar Caribe, en el departamento de Magdalena en el norte de Colombia.", 5, 60));
+    $_SESSION["grafo"]->agregarVertice(new Vertice("D", "SAN ANDRÉS", 120000, "Turístico", "Es una pequeña isla colombiana frente a Nicaragua en el Caribe.", 5, 100));
+    $_SESSION["grafo"]->agregarVertice(new Vertice("E", "TAGANGA", 120000, "Turístico", "Es la mejor opción para alojarse en Santa Marta si lo que buscas es disfrutar de la playa.", 5, 80));
+    $_SESSION["grafo"]->agregarVertice(new Vertice("F", "PALOMINO", 120000, "Cultural", "Es uno de los cinco corregimientos del municipio de Dibulla, perteneciente a La Guajira", 5, 70));
+    $_SESSION["grafo"]->agregarVertice(new Vertice("G", "COVEÑAS", 120000, "Turístico", "Es una ciudad turística del Golfo de Morrosquillo en el norte de Colombia.", 5, 45));
 
     $_SESSION["grafo"]->agregarArista("A", "B", 20);
     $_SESSION["grafo"]->agregarArista("B", "A", 20);
@@ -150,6 +150,8 @@ if (isset($_POST["eliminarArista"])) {
     <link rel="stylesheet" href="./style.css">
     <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 
+    <script src="./main.js" defer></script>
+
 </head>
 
 <body>
@@ -204,11 +206,14 @@ if (isset($_POST["eliminarArista"])) {
             </form>
 
             <form action="index.php" method="post">
-                <label for="caminoMasCorto-origen">Vertice Origen:</label>
-                <input type="text" name="origen" id="caminoMasCorto-origen" required>
+                <div id="nodesContainer">
+                    <label for="caminoMasCorto-origen">Vertice Origen:</label>
+                    <input type="text" name="caminoMasCortoData[]" id="caminoMasCorto-origen" required>
 
-                <label for="caminoMasCorto-destino">Vertice Destino:</label>
-                <input type="text" name="destino" id="caminoMasCorto-destino" required>
+                    <label for="caminoMasCorto-destino">Vertice Destino:</label>
+                    <input type="text" name="caminoMasCortoData[]" id="caminoMasCorto-destino" required>
+                </div>
+                <button onclick="addDestination()" type="button" id="addBtn">Agregar Destino...</button>
                 <button type="submit" name="caminoMasCorto">Ver camino más corto</button>
             </form>
 
@@ -270,7 +275,7 @@ if (isset($_POST["eliminarArista"])) {
                         $vertice = $_SESSION["grafo"]->getVertice($id);
                         $nombre = $vertice->getNombre();
                         $duracion = $vertice->getDuracionVisita();
-                        echo "{font: {strokeWidth: 1, strokeColor: '#FFF3C6', vadjust: -43}, id: '$id', label: '$nombre', mass: 5, shape: 'dot', title: htmlTitle('$vertice')},";
+                        echo "{font: {strokeWidth: 1, strokeColor: '#FFF3C6', vadjust: -43}, id: '$id', label: '$nombre', mass: 5, shape: 'dot', title: htmlTitle('" . $vertice->basicToString() . "')},";
                     }
                     ?>
                 ]);
@@ -320,15 +325,33 @@ if (isset($_POST["eliminarArista"])) {
                 let grafo = new vis.Network(contenedor, data, opciones);
 
                 <?php if (isset($_POST["caminoMasCorto"])) : ?>
-                    <?php $camino = $_SESSION["grafo"]->caminoMasCorto($_POST["origen"], $_POST["destino"]); ?>
-                    <?php $aristasCamino = $_SESSION["grafo"]->mostrarAristasRecorrido($camino); ?>
+                    <?php $caminoCompleto = array(); ?>
+                    <?php
+                    $anterior = $_POST["caminoMasCortoData"][0];
+                    foreach ($_POST["caminoMasCortoData"] as $key => $value) {
+                        if ($anterior != $value) {
+                            $camino = $_SESSION["grafo"]->caminoMasCorto($anterior, $value);
+                            if ($key != 1) {
+                                array_shift($camino);
+                            }
+                            array_push($caminoCompleto, ...$camino);
+                        }
+                        $anterior = $value;
+                    }
+
+                    ?>
+                    <?php ?>
+                    <?php $aristasCamino = $_SESSION["grafo"]->mostrarAristasRecorrido($caminoCompleto); ?>
 
                     grafo.setSelection({
-                        nodes: <?= json_encode($camino) ?>,
+                        nodes: <?= json_encode($caminoCompleto) ?>,
                         edges: <?= json_encode($aristasCamino) ?>
                     }, {
                         highlightEdges: false
                     })
+
+                    <?php $status = "success"; ?>
+                    <?php $mensaje = implode(' -> ', $caminoCompleto); ?>
                 <?php endif; ?>
 
                 <?php if (isset($_POST["verAdyacentes"]) || isset($_POST["verVertice"]) || isset($_POST["verGrado"])) : ?>
