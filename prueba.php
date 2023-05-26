@@ -24,10 +24,14 @@ $grafo->agregarArista("C", "E", 12);
 $grafo->agregarArista("D", "F", 11);
 $grafo->agregarArista("E", "G", 10);
 
-// $resultado = $grafo->caminoMasCorto("A", "F");
-// var_dump($resultado);
+// $resultado = $grafo->getAdyacentes("B");
+// $new_result = array();
 
-// $aristas = $grafo->mostrarAristasRecorrido($resultado);
+
+// $resultado = $grafo->caminoMasCorto("A", "F");
+// var_dump($new_result);
+
+// $aristas = $grafo->mostrarAristasRecorrido($new_result);
 // var_dump($aristas);
 
 // echo $grafo->getVertice("A");

@@ -252,6 +252,95 @@ if (isset($_POST["eliminarArista"])) {
         </section>
 
         <section class="output-container">
+            <div class="grafo" id="grafo"></div>
+
+            <?php $adyacencias = $_SESSION["grafo"]->getMatrizA(); ?>
+            <script type="text/javascript">
+                // parse html function
+                function htmlTitle(html) {
+                    const container = document.createElement('div');
+                    container.innerHTML = html;
+                    return container;
+                }
+
+                // create an array with nodes
+                let vertices = new vis.DataSet([
+                    <?php
+                    foreach ($adyacencias as $id => $aristas) {
+                        $vertice = $_SESSION["grafo"]->getVertice($id);
+                        $nombre = $vertice->getNombre();
+                        $duracion = $vertice->getDuracionVisita();
+                        echo "{font: {strokeWidth: 1, strokeColor: '#FFF3C6', vadjust: -43}, id: '$id', label: '$nombre', mass: 5, shape: 'dot', title: htmlTitle('$vertice')},";
+                    }
+                    ?>
+                ]);
+
+                // create an array with edges
+                let aristas = new vis.DataSet([
+                    <?php
+                    foreach ($adyacencias as $vertice => $aristas) {
+                        if (!empty($aristas)) {
+                            foreach ($aristas as $destino => $peso) {
+                                echo "{id: '$vertice$destino', from: '$vertice', to: '$destino', label: '$peso'},";
+                            }
+                        }
+                    }
+                    ?>
+                ]);
+
+                // create a network
+                let contenedor = document.getElementById('grafo');
+
+                // provide the data in the vis format
+                let data = {
+                    nodes: vertices,
+                    edges: aristas
+                };
+                let opciones = {
+                    nodes: {
+                        color: {
+                            highlight: {
+                                border: '#D21F3C',
+                                background: '#D2E5FF'
+                            },
+                        },
+                    },
+                    edges: {
+                        arrows: 'to',
+                        color: {
+                            highlight: '#D21F3C',
+                        }
+                    },
+                    configure: {
+                        enabled: false,
+                    }
+                };
+
+                // initialize your network!
+                let grafo = new vis.Network(contenedor, data, opciones);
+
+                <?php if (isset($_POST["caminoMasCorto"])) : ?>
+                    <?php $camino = $_SESSION["grafo"]->caminoMasCorto($_POST["origen"], $_POST["destino"]); ?>
+                    <?php $aristasCamino = $_SESSION["grafo"]->mostrarAristasRecorrido($camino); ?>
+
+                    grafo.setSelection({
+                        nodes: <?= json_encode($camino) ?>,
+                        edges: <?= json_encode($aristasCamino) ?>
+                    }, {
+                        highlightEdges: false
+                    })
+                <?php endif; ?>
+
+                <?php if (isset($_POST["verAdyacentes"]) || isset($_POST["verVertice"]) || isset($_POST["verGrado"])) : ?>
+
+                    grafo.setSelection({
+                        nodes: <?= json_encode($_POST["idVertice"]) ?>
+                    }, {
+                        highlightEdges: false
+                    })
+                <?php endif; ?>
+            </script>
+
             <?php if ($status == "error") : ?>
                 <div class="output error">
                     <span><?= $mensaje ?></span>
@@ -264,88 +353,6 @@ if (isset($_POST["eliminarArista"])) {
                 </div>
             <?php endif; ?>
 
-            <?php if (isset($_POST["verGrafo"]) || isset($_POST["caminoMasCorto"])) : ?>
-
-                <div class="grafo" id="grafo"></div>
-
-                <?php $adyacencias = $_SESSION["grafo"]->getMatrizA(); ?>
-                <script type="text/javascript">
-                    // parse html function
-                    function htmlTitle(html) {
-                        const container = document.createElement('div');
-                        container.innerHTML = html;
-                        return container;
-                    }
-
-                    // create an array with nodes
-                    let vertices = new vis.DataSet([
-                        <?php
-                        foreach ($adyacencias as $id => $aristas) {
-                            $vertice = $_SESSION["grafo"]->getVertice($id);
-                            $nombre = $vertice->getNombre();
-                            $duracion = $vertice->getDuracionVisita();
-                            echo "{font: {strokeWidth: 1, strokeColor: '#FFF3C6', vadjust: -43}, id: '$id', label: '$nombre', mass: 5, shape: 'dot', title: htmlTitle('$vertice')},";
-                        }
-                        ?>
-                    ]);
-
-                    // create an array with edges
-                    let aristas = new vis.DataSet([
-                        <?php
-                        foreach ($adyacencias as $vertice => $aristas) {
-                            if (!empty($aristas)) {
-                                foreach ($aristas as $destino => $peso) {
-                                    echo "{id: '$vertice$destino', from: '$vertice', to: '$destino', label: '$peso'},";
-                                }
-                            }
-                        }
-                        ?>
-                    ]);
-
-                    // create a network
-                    let contenedor = document.getElementById('grafo');
-
-                    // provide the data in the vis format
-                    let data = {
-                        nodes: vertices,
-                        edges: aristas
-                    };
-                    let opciones = {
-                        nodes: {
-                            color: {
-                                highlight: {
-                                    border: '#D21F3C',
-                                    background: '#D2E5FF'
-                                },
-                            },
-                        },
-                        edges: {
-                            arrows: 'to',
-                            color: {
-                                highlight: '#D21F3C',
-                            }
-                        },
-                        configure: {
-                            enabled: false,
-                        }
-                    };
-
-                    // initialize your network!
-                    let grafo = new vis.Network(contenedor, data, opciones);
-
-                    <?php if (isset($_POST["caminoMasCorto"])) : ?>
-                        <?php $camino = $_SESSION["grafo"]->caminoMasCorto($_POST["origen"], $_POST["destino"]); ?>
-                        <?php $aristasCamino = $_SESSION["grafo"]->mostrarAristasRecorrido($camino); ?>
-
-                        grafo.setSelection({
-                            nodes: <?= json_encode($camino) ?>,
-                            edges: <?= json_encode($aristasCamino) ?>
-                        }, {
-                            highlightEdges: false
-                        })
-                    <?php endif; ?>
-                </script>
-            <?php endif; ?>
         </section>
     </main>
 
