@@ -90,9 +90,10 @@ if (isset($_POST["verAdyacentes"])) {
     $resultado = $_SESSION["grafo"]->getAdyacentes($_POST["idVertice"]);
     if ($resultado) {
         $status = "success";
-        $mensaje = "Adyacencias: <br>";
+        $mensaje = "Adyacencias:<hr>";
         foreach ($resultado as $key => $value) {
-            $mensaje .= "$key -> $value <br>";
+            $info = $_SESSION["grafo"]->getVertice($key);
+            $mensaje .= "$info<br> <b>Distancia:</b> $value km<hr>";
         }
     } else {
         $status = "error";
@@ -162,10 +163,10 @@ if (isset($_POST["eliminarArista"])) {
 
             <form action="index.php" method="post">
                 <label for="agregarVertice-id">Id:</label>
-                <input type="text" name="idVertice" id="agregarVertice-id">
+                <input type="text" name="idVertice" id="agregarVertice-id" required>
 
                 <label for="agregarVertice-nombre">Nombre:</label>
-                <input type="text" name="nombreVertice" id="agregarVertice-nombre">
+                <input type="text" name="nombreVertice" id="agregarVertice-nombre" required>
 
                 <label for="agregarVertice-descripcion">Descripcion:</label>
                 <input type="text" name="descripcionVertice" id="agregarVertice-descripcion">
@@ -187,13 +188,13 @@ if (isset($_POST["eliminarArista"])) {
 
             <form action="index.php" method="post">
                 <label for="agregarArista-origen">Vertice Origen:</label>
-                <input type="text" name="origen" id="agregarArista-origen">
+                <input type="text" name="origen" id="agregarArista-origen" required>
 
                 <label for="agregarArista-destino">Vertice Destino:</label>
-                <input type="text" name="destino" id="agregarArista-destino">
+                <input type="text" name="destino" id="agregarArista-destino" required>
 
                 <label for="agregarArista-peso">Peso:</label>
-                <input type="text" name="peso" id="agregarArista-peso">
+                <input type="text" name="peso" id="agregarArista-peso" required>
 
                 <button type="submit" name="agregarArista">Agregar Arista</button>
             </form>
@@ -204,10 +205,10 @@ if (isset($_POST["eliminarArista"])) {
 
             <form action="index.php" method="post">
                 <label for="caminoMasCorto-origen">Vertice Origen:</label>
-                <input type="text" name="origen" id="caminoMasCorto-origen">
+                <input type="text" name="origen" id="caminoMasCorto-origen" required>
 
                 <label for="caminoMasCorto-destino">Vertice Destino:</label>
-                <input type="text" name="destino" id="caminoMasCorto-destino">
+                <input type="text" name="destino" id="caminoMasCorto-destino" required>
                 <button type="submit" name="caminoMasCorto">Ver camino más corto</button>
             </form>
 
